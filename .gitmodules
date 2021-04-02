@@ -1,0 +1,6 @@
+[submodule "jsonlab"]
+	path = jsonlab
+	url = https://github.com/fangq/jsonlab
+[submodule "nifti_tools"]
+	path = nifti_tools
+	url = https://github.com/francopestilli/nifti_tools
