@@ -13,7 +13,6 @@ Date:   Wed Sep 6 13:01:57 2017 -0400
     Merge pull request #41 from dasantonym/master
     
     added package.json to be able to intall via npm package manager
-/N/u/brlife/git/spm12
 /N/u/brlife/git/mba
 commit 8f66ea6054d7aaa653c70ecc46f7fe55d61ab972
 Author: Soichi Hayashi <hayashis@iu.edu>

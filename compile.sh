@@ -18,11 +18,9 @@ matlab -nodisplay -nosplash -r build && rm build.m
 log=compiled/commit_ids.txt
 true > $log
 echo "/N/u/dnbulloc/Carbonate/gitProjects/app-tractDensityMasks/wma_tools" >> $log
-(cd wma_tools && git log -1) >> $log
+(cd /N/u/dnbulloc/Carbonate/gitProjects/app-tractDensityMasks/wma_tools && git log -1) >> $log
 echo "/N/u/brlife/git/jsonlab" >> $log
 (cd /N/u/brlife/git/jsonlab && git log -1) >> $log
-echo "/N/u/brlife/git/spm12" >> $log
-(cd /N/u/brlife/git/spm12 && git log -1) >> $log
 echo "/N/u/brlife/git/mba" >> $log
 (cd /N/u/brlife/git/mba && git log -1) >> $log
 echo "/N/u/hayashis/git/vistasoft" >> $log
