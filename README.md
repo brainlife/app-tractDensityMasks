@@ -2,24 +2,17 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.1-blue.svg)](https://doi.org/10.25663/bl.app.1)
 
 # app-template-MatLab
-This is a template for a MatLab-based brainlife.io/app
 
-As example the App simply does the following:
+ This app creates a density mask (NIfTI format) for each
+ structure labled in a classification structure and saves it to disk
 
-<ol>
-<li>Loads a T1w NIfTI-1 file.</li>
-<li>Sets a new resolution to resample the file to.</li>
-<li>Resamples it a 1mm isotropic resolution.</li>
-<li>Saves the new NIfTI file down to disk in the current directory.</li>
-</ol>
- 
 ### Author
-- [Franco Pestilli](pestilli@utexas.edu)
+- [Dan Bullock](dnbulloc@iu.edu)
 
 ### Contributors
-- [Franco Pestilli](pestilli@utexas.edu)
+- - [Dan Bullock](dnbulloc@iu.edu)
 
-#### Copyright (c) 2020 brainlife.io The University of Texas at Austin and Indiana University
+#### Copyright (c) 2020 
 
 ### Funding Acknowledgement
 brainlife.io is publicly funded and for the sustainability of the project it is helpful to Acknowledge the use of the platform. We kindly ask that you acknowledge the funding below in your code and publications. Copy and past the following lines into your repository when using this code.
@@ -36,17 +29,7 @@ We ask that you the following articles when publishing papers that used data, co
 1. Avesani, P., McPherson, B., Hayashi, S. et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [https://doi.org/10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
 ### Local usage for the App:
-You can run this App locally by copying a NIfTI file of a T1w file inside the directory of the file you are reading (the file should be named t1.nii). After that you can invoke the main.m in a MatLab prompt and the code will resample the input T1w NIfTI you provided to 1 mm.
-
-If you want to change the resolution of the file generated you can edit the appropriate filed inside the config.json.example provide with the github repository you downloaded. The input/output file names of the T1w files can also be changed inside the config.json.example file.
- 
-To set up this App to run locally you will need to have done the following:
-
-A. Download the code for this App from https://github.com/francopestilli/app-template-matlab. Save it inside a directory accessible to MatLab, for examople, /mycomputerpath/myResearch/thisTestApp
-
-B. Copy a T1w NIfTI-1 file inside the same folder: /mycomputerpath/myResearch/thisTestApp
-
-C. Create a config.json of your own an example file is provided with this repository. The fields inside the config.json my be set as required
+Given that this is compiled code, setting the config.json entries to the appropriate paths and values should be sufficient to permit running locally
 
 ### Usage of the App on brainlife.io
 When an App is requested to run on brainlife.io, the platform will do the following:
