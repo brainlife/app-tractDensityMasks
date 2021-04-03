@@ -1,0 +1,9 @@
+{
+    "t1": "./t1.nii.gz",
+    "tractogram": "./track.tck",
+    "WMC": "classification.mat",
+    "voxelResize": 1,
+    "threshold": 0,
+    "smoothParam": 0,
+    "normalizeBool": false
+}

@@ -1,0 +1,29 @@
+/N/u/dnbulloc/Carbonate/gitProjects/app-tractDensityMasks/wma_tools
+commit e380162e46b3526ed538c6ff071131f960bb0284
+Author: Daniel Bullock <dnbulloc@iu.edu>
+Date:   Sat Apr 3 14:47:56 2021 -0400
+
+    fixed parenthetical issue in save path
+/N/u/brlife/git/jsonlab
+commit 474d8c824800b5f2109c08f989085cb961acdbe3
+Merge: ae7a5d9 38b24fb
+Author: Qianqian Fang <fangqq@gmail.com>
+Date:   Wed Sep 6 13:01:57 2017 -0400
+
+    Merge pull request #41 from dasantonym/master
+    
+    added package.json to be able to intall via npm package manager
+/N/u/brlife/git/spm12
+/N/u/brlife/git/mba
+commit 8f66ea6054d7aaa653c70ecc46f7fe55d61ab972
+Author: Soichi Hayashi <hayashis@iu.edu>
+Date:   Tue May 21 09:43:42 2019 -0400
+
+    merging dan's local changes to make it work with newer version of
+    matlab(?)
+/N/u/hayashis/git/vistasoft
+commit dd1b242d110f5748e64aae82de6604109b016434
+Author: Soichi Hayashi <hayashis@iu.edu>
+Date:   Thu Apr 23 20:36:14 2020 +0000
+
+    fixed typo

@@ -4,3 +4,6 @@
 [submodule "nifti_tools"]
 	path = nifti_tools
 	url = https://github.com/francopestilli/nifti_tools
+[submodule "wma_tools"]
+	path = wma_tools
+	url = https://github.com/DanNBullock/wma_tools

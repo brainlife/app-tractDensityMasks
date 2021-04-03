@@ -1,85 +1,93 @@
-% brainlife.io App Template for MatLab code
+function main()
+% for app-tractDensityMasks
 %
-% This file is a template for a matlab-based brainlife.io App 
+% This function creates a density mask (NIfTI format) for each
+% structure labled in a classification structure and saves it to disk
 %
-% As example the App simply does the following:
-% (1) loads a T1w NIfTI-1 file, 
-% (2) sets a new resolution to resampole the file to
-% (3) resamples it a 1mm isotropic resolution, and 
-% (4) saves the new NIfTI file down to disk in the current directory
+% INPUTS
+%
+%  classification: Either the path to structure or the structure itself.
+%  The strucure has a field "names" with (N) names of the tracts classified
+%  while the field "indexes" has a j long vector (where  j = the nubmer of
+%  streamlines in wbFG (i.e. length(wbFG.fibers)).  This j long vector has
+%  a 0 for to indicate a streamline has gone unclassified, or a number 1:N
+%  indicatate that the streamline has been classified as a member of tract
+%  (N). See https://brainlife.io/datatype/5cc1d64c44947d8aea6b2d8b for more
+%  info.
+%
+% tractogram: also known as a WBFG in other functions.  A composite
+% tractogragpy structure which is associated with the input
+% classificationstructure.  Contains those streamlines which are labeled by
+% the classification structure.
+%
+% referenceNifti:  The reference NIfTI that is to be used as the reference
+% for generating the mask.  Theoretically it may be possible to write a
+% function of this sort without using a reference NIfTI
+%
+% outdir: the out directory in which the output densityMasks/maps are to be
+% saved
+%
+% voxelResize:  the voxel resize parameter.  0 or [] results in no
+% resizing.  Input value indicates the desired isometric voxel size of the
+% output.  WARNING:  given that the node sampling rate is ~ 1mm, resizing
+% of less than 1mm can result in masks with many holes.  Recomend use of
+% smoothing to combat this.
+%
+% threshold:  The minimum number of streamlines (nodes, in practice)
+% required in a voxel needed to prevent the value from being thresheld to
+% 0.  This is applied AFTER the voxel resize but BEFORE any smoothing is
+% applied.
+%
+% smoothParam: the smoothing kernel (necessarily odd, corresponding to
+% diameter +1) to be applied to the mask.  Currently implemented as
+% gaussian
+%
+% normalizeBool:  Whether or not to apply normalization.  This will occur
+% at the last step.  Will divide by highest density such that values range
+% from 0 to 1.
+%
+%  OUTPUTS
+%
+%  densityMask:  A NIfTI mask containing the density mask corresponding to
+%  the input tract.
+%
 % 
-% **Local usage for the App:**
-% You can run this App locally by copying a NIfTI file of a T1w file inside
-% the directory of the file you are reading (the file should be named t1.nii) 
-% After that you can invoke this file (main.m) in a matlab prompt and the code 
-% will resample the input T1w NIfTI you provided to 1 mm.
-% 
-% If you want to change the resolution of the file generated you can edit
-% the appropriate filed inside the config.json.example provide with the
-% github repository you downloaded. The input/output file names of the T1w 
-% files can also be changed inside the config.json.example file.
-%  
-% To set up this App to run locally you will need to have done the following:
-% A. Download the code for this App from https://github.com/francopestilli/app-template-matlab. 
-%    Save it inside a directory accessible to MatLab, for examople, /mycomputerpath/myResearch/thisTestApp
-% B. Copy a T1w NIfTI-1 file inside the same folder: /mycomputerpath/myResearch/thisTestApp
-% C. Create a config.json of your own an example file is provided with this repository. The fields inside the config.json my be set as required
-%
-% **Usage of the App on brainlife.io**
-% When an App is requested to run on brainlife.io, the platform will do the following:
-% A. Stage the code inside this git repo on a computing resource.
-% B. Stage the input data requested to run the App on.
-% C. Created a config.json in the same working directory of the App and Data in the computing resource.
-%
-% The config.json file contains the parameters and the path to the input data needed for the App to run. 
-% The App paramters are set by the brainlife.io users interface when the App is called and saved inside the config.json
-% The input data (a T1w nifti file in this case) is selected by the user during the process of requesting the App on brainlife.io 
-% 
-% Running the App on brainlife.io really means "execute this main.m script on a computing resource."
-% 
-%
-% Author: Franco Pestilli
-%
-% Copyright (c) 2020 brainlife.io 
-%
-% The University of Texas at Austin
+% switch getenv('ENV')
+%     case 'IUHPC'
+%         disp('loading paths (HPC)')
+%         addpath(genpath('/N/u/brlife/git/jsonlab'))
+%         addpath(genpath('/N/u/brlife/git/vistasoft'))
+%         addpath(genpath('/N/u/brlife/git/afq-master'))
+%         addpath(genpath('/N/u/kitchell/Karst/Applications/iso2mesh'))
+%         addpath(genpath('/N/u/kitchell/Carbonate/wma_tools'))
+%         addpath(genpath('/N/u/kitchell/Carbonate/mrtrix3/matlab'))
+%     case 'VM'
+%         disp('loading paths (VM)')
+%         addpath(genpath('/usr/local/jsonlab'))
+%         addpath(genpath('/usr/local/iso2mesh'))
+%         addpath(genpath('/usr/local/vistasoft'))
+%         addpath(genpath('/usr/local/afq-master'))
+% end
 
-% add submodules (libraries necessary to run some of the code below.
-% submodules added to the GitHub repository for this App will be 
-% automatically downloaded with the App but will need to be explctily 
-% added to the MatLab path. 
-addpath(genpath(pwd))
+% load config.json
+config = loadjson('config.json');
 
-% We load the inputs from an example config.json (actually called
-% config.json.example)
-% 
-% The example config.json,example files contains three fields:
-% - the inout file name
-% - a parameter specifiying the resolution of the output NIfTI file
-% - the file name of the output NIfTI that will be writtn to disk
-%
-% Note. This command requires the submodule that allows reading JSON files in
-% MatLab
-config = loadjson('config.json.example');
+disp('config dump')
+disp(config)
 
-% We now pass the inputs and outputs read in from the config.json file into
-% the function that will load the T1w file, reslice it and write out the new
-% resliced file at 1 mm resolution.
-%
-% This will save out in the current directoryh a file called "T1w_resliced1mm.nii"
-% because that is the file name stored in config.outname
-reslice_nii(config.t1, ...
-            config.outname, ...
-            config.outres, ...
-            true, true, 2)
-        
-% reslice usage:
-% reslice_nii(old_fn, ...
-%             new_fn, ...
-%             [voxel_size], ...
-%             [verbose], .... 
-%             [bg], ...
-%             [method], [img_idx], [preferredForm]);
+%make output directory
+mkdir('masks')
 
+%read in components of config file
+referenceNifti = niftiRead(config.t1);
+tractogram= fgRead(config.tractogram);
+load(config.WMC);
+voxelResize=config.voxelResize;
+threshold=config.threshold;
+smoothParam=config.smoothParam;
+normalizeBool=config.normalizeBool;
 
-	
+bsc_densityMapsFromClassification(classification, tractogram, referenceNifti, 'masks', voxelResize, threshold, smoothParam, normalizeBool)
+
+end
+
