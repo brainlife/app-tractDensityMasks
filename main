@@ -12,3 +12,5 @@
 module load singularity 2> /dev/null
 
 singularity exec -e docker://brainlife/mcr:neurodebian1604-r2017a ./compiled/main
+
+mkdir masks/masks && mv masks/*.nii.gz ./masks/masks/
