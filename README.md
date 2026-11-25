@@ -10,7 +10,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -20,13 +20,13 @@ Runs bsc_densityMapsFromClassification on the tractogram and classification in t
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/anat/t1w` · `neuro/track/tck` · `neuro/wmc` |
-| 📤 **Outputs** | `neuro/tractmasks` |
-| 🐳 **Container** | `brainlife/mcr:neurodebian1604-r2017a` |
-| ⚙️ **Resources** | 1 CPUs |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.498](https://doi.org/10.25663/brainlife.app.498) |
+| **Inputs** | `neuro/anat/t1w` · `neuro/track/tck` · `neuro/wmc` |
+| **Outputs** | `neuro/tractmasks` |
+| **Container** | `brainlife/mcr:neurodebian1604-r2017a` |
+| **Resources** | 1 CPUs |
+| **Run it** | [doi.org/10.25663/brainlife.app.498](https://doi.org/10.25663/brainlife.app.498) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
@@ -34,14 +34,14 @@ Runs bsc_densityMapsFromClassification on the tractogram and classification in t
 | `tractome` | `neuro/track/tck` | yes | The source tractome that the WMC data object is associated with |
 | `classification` | `neuro/wmc` | yes | White matter classification (classification.mat) labelling the tracts. Must index the streamlines of the given tractogram. |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `masks` | `neuro/tractmasks` | NIfTI density masks for each of the structures listed in the input WMC object. |
 
 <details>
-<summary><b>⚙️ Parameters</b> (4)</summary>
+<summary><b>Parameters</b> (4)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -54,7 +54,7 @@ Runs bsc_densityMapsFromClassification on the tractogram and classification in t
 
 <!-- brainlife-app:end -->
 
-## 🔬 How it works
+## How it works
 
 The App runs `bsc_densityMapsFromClassification` from [wma_tools](https://github.com/DanNBullock/wma_tools) (compiled MATLAB) on a tractogram and the [white matter classification (WMC)](https://brainlife.io/datatype/5cc1d64c44947d8aea6b2d8b) that labels its streamlines, and writes one density image per tract on the grid of the reference T1. Use it to turn tracts into volumetric masks or density maps for overlap or ROI analyses.
 
@@ -69,13 +69,13 @@ The steps, in order, are controlled by four parameters:
 
 See also MRtrix3 [`tckmap`](https://mrtrix.readthedocs.io/en/latest/reference/commands/tckmap.html).
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the App at [doi.org/10.25663/brainlife.app.498](https://doi.org/10.25663/brainlife.app.498), choose a reference T1 (`neuro/anat/t1w`), the tractogram (`neuro/track/tck`) and its classification (`neuro/wmc`), set the parameters and press **Execute**. The maps are archived to your project as a `neuro/tractmasks` dataset tagged `density`.
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/). The code is compiled MATLAB and `main` runs it in the `brainlife/mcr:neurodebian1604-r2017a` container, so setting the `config.json` entries is enough; MATLAB is not needed.
 
@@ -100,7 +100,7 @@ You need [Singularity/Apptainer](https://apptainer.org/). The code is compiled M
    ./main
    ```
 
-## 📦 Outputs
+## Outputs
 
 ```text
 masks/
@@ -108,7 +108,7 @@ masks/
     └── *.nii.gz    one density map per tract in the classification
 ```
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -118,11 +118,11 @@ masks/
 - Bullock et al. Associative white matter connecting the dorsal and ventral posterior human cortex. *Brain Structure and Function* 224:2631-2660 (2019). [doi:10.1007/s00429-019-01907-8](https://doi.org/10.1007/s00429-019-01907-8)
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 
-## 👥 Authors
+## Authors
 
 - [Dan Bullock](https://github.com/DanNBullock)
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -141,6 +141,6 @@ masks/
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 [MIT](LICENSE). The App also uses [jsonlab](https://github.com/fangq/jsonlab), [wma_tools](https://github.com/DanNBullock/wma_tools), [spm12](https://github.com/spm/spm12), [mba](https://github.com/francopestilli/mba) and [vistasoft](https://github.com/vistalab/vistasoft), each under its own license.
