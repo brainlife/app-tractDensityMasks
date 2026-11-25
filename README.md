@@ -3,6 +3,38 @@
 
 # app-tractDensityMasks
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+**Creates a streamline density map (NIfTI) for each tract in a white matter classification, with optional resizing, thresholding, smoothing and normalisation, using wma_tools.**
+
+Runs bsc_densityMapsFromClassification on the tractogram and classification in the T1's space and writes one density image per tract. Use it to turn tracts into volumetric masks or density maps for overlap or ROI analyses.
+
+Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.498](https://doi.org/10.25663/brainlife.app.498)
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `t1` | `neuro/anat/t1w` | yes | A reference T1 from which will provide the reference space that the density mask will be created in. |
+| `tractome` | `neuro/track/tck` | yes | The source tractome that the WMC data object is associated with |
+| `classification` | `neuro/wmc` | yes | White matter classification (classification.mat) labelling the tracts. Must index the streamlines of the given tractogram. |
+
+| Output | Datatype | Description |
+|---|---|---|
+| `masks` | `neuro/tractmasks` | NIfTI density masks for each of the structures listed in the input WMC object. |
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `voxelResize` | number | `1` | the voxel resize parameter. 0 or [] results in no resizing. Input value indicates the desired isometric voxel size of the output. WARNING: given that the node sampling rate is ~ 1mm, resizing of less than 1mm can result in masks with many holes. Recommend use of smoothing to combat this. |
+| `threshold` | number | `0` | The minimum number of streamlines (nodes, in practice) required in a voxel needed to prevent the value from being thresheld to 0. This is applied AFTER the voxel resize but BEFORE any smoothing is applied. |
+| `smoothParam` | number | `1` | the smoothing kernel (necessarily odd, corresponding to diameter +1) to be applied to the mask. Currently implemented as gaussian. |
+| `normalizeBool` | boolean | `false` | Whether or not to apply normalization. This will occur at the last step. Will divide by highest density such that values range from 0 to 1. |
+
+Runtime: container `brainlife/mcr:neurodebian1604-r2017a`; 1 CPUs.
+
+Please cite:
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
  This app creates a streamline density mask (NIfTI format) for each
  structure labled in a classification structure and saves it to disk.
 
